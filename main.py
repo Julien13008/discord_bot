@@ -1,16 +1,38 @@
-# This is a sample Python script.
+# This example requires the 'message_content' intent.
 
-# Press ⌃R to execute it or replace it with your code.
-# Press Double ⇧ to search everywhere for classes, files, tool windows, actions, and settings.
+import discord
+from dotenv import load_dotenv
+import os
 
-
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press ⌘F8 to toggle the breakpoint.
+load_dotenv()
 
 
-# Press the green button in the gutter to run the script.
-if __name__ == '__main__':
-    print_hi('PyCharm')
+class MyClient(discord.Client):
+    async def on_ready(self):
+        print(f'Logged on as {self.user}!')
 
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
+    async def on_message(self, message):
+        if message.author == self.user:
+            return
+
+        channel = self.get_channel(message.channel.id)
+        print(message.author)
+        new_content = message.content
+        if "twitter.com" in message.content:
+            new_content = message.content.replace("twitter.com", "vxtwitter.com")
+            await channel.send(new_content)
+
+        if "x.com" in message.content:
+            new_content = message.content.replace("x.com", "vxtwitter.com")
+            await channel.send(new_content)
+
+        print(f'Message from {message.author}: {new_content}')
+
+
+intents = discord.Intents.default()
+intents.message_content = True
+
+client = MyClient(intents=intents)
+token = os.getenv("DISCORD_TOKEN")
+
+client.run(token)
