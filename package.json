@@ -4,7 +4,7 @@
   "description": "",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "pip3 install discord python-dotenv && python3 main.py"
+    "start": "python3 main.py"
   },
   "author": "",
   "license": "ISC"
